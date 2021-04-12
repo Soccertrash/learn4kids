@@ -1,6 +1,6 @@
 class Category {
-  int id;
-  final String categoryName;
+  int id = -1;
+  String categoryName;
 
   Category({this.id, this.categoryName});
 

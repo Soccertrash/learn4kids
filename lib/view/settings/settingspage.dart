@@ -3,44 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:learn4kids/persist/access/persistenceService.dart';
 import 'package:learn4kids/persist/model/category.dart';
+import 'package:learn4kids/view/routing/router.dart' as router;
 import 'package:learn4kids/view/styles/colors.dart';
 import 'package:learn4kids/view/styles/text.dart' as TextStyle;
 
-class SettingsPage extends StatelessWidget {
-  Future<void> _displayTextInputDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(AppLocalizations.of(context).addCategory),
-            content: TextField(
-              decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context).category),
-            ),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Category c = new Category(categoryName: "Category One");
-                    PersistenceService.db.addCategoryToDatabase(c);
-                    Navigator.pop(context);
-                  },
-                  style: TextButton.styleFrom(
-                    primary: AppColors.primary,
-                    backgroundColor: AppColors.secondary,
-                  ),
-                  child: Text(AppLocalizations.of(context).ok)),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: TextButton.styleFrom(
-                    primary: AppColors.primary,
-                    backgroundColor: AppColors.error,
-                  ),
-                  child: Text(AppLocalizations.of(context).cancel)),
-            ],
-          );
-        });
+class _SettingsState extends State<SettingsPage> {
+  Future<List<Category>> _data;
+
+  @override
+  void initState() {
+    super.initState();
+    _reload();
+  }
+
+  void _reload() {
+    _data = PersistenceService.db.getAlCategories();
+  }
+
+  void _navigateTo(Category category) {
+    Navigator.pushNamed(context, router.SettingsCategoryRoute,
+            arguments: category)
+        .then((value) {
+      setState(() {
+        _reload();
+      });
+    });
+  }
+
+  void _delete(Category category) {
+    PersistenceService.db.deleteCategory(category).then((value) {
+      setState(() {
+        _reload();
+      });
+    });
   }
 
   @override
@@ -61,7 +56,7 @@ class SettingsPage extends StatelessWidget {
           Expanded(
               flex: 2,
               child: FutureBuilder<List<Category>>(
-                future: PersistenceService.db.getAlCategories(),
+                future: _data,
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Category>> snapshot) {
                   if (snapshot.hasData) {
@@ -73,10 +68,21 @@ class SettingsPage extends StatelessWidget {
                             return Container(
                                 width: 300,
                                 margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                decoration: BoxDecoration(color: Colors.amber),
-                                child: Text(
-                                  'text ${i.categoryName}',
-                                  style: TextStyle.normal,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: AppColors.secondary,
+                                    border: Border.all(width: 4)),
+                                child: GestureDetector(
+                                  child: Text(
+                                    '${i.categoryName}',
+                                    style: TextStyle.normalPrimary,
+                                  ),
+                                  onTap: () {
+                                    _navigateTo(i);
+                                  },
+                                  onLongPress: () {
+                                    _delete(i);
+                                  },
                                 ));
                           },
                         );
@@ -85,8 +91,6 @@ class SettingsPage extends StatelessWidget {
                   } else {
                     return SizedBox(
                       child: CircularProgressIndicator(),
-                      width: 60,
-                      height: 60,
                     );
                   }
                 },
@@ -95,7 +99,7 @@ class SettingsPage extends StatelessWidget {
               child: Center(
             child: TextButton.icon(
                 onPressed: () {
-                  _displayTextInputDialog(context);
+                  _navigateTo(new Category());
                 },
                 style: TextButton.styleFrom(
                   primary: AppColors.primary,
@@ -108,4 +112,9 @@ class SettingsPage extends StatelessWidget {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class SettingsPage extends StatefulWidget {
+  @override
+  State createState() => _SettingsState();
 }

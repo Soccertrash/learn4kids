@@ -53,6 +53,13 @@ class PersistenceService {
     return list;
   }
 
+  Future<bool> categoryExists(Category category) async {
+    final db = await database;
+    var response = await db.query("Category",
+        where: "categoryName = ?", whereArgs: [category.categoryName]);
+    return response.isNotEmpty;
+  }
+
   addLearningObjectToDatabase(LearningObject learningObject) async {
     final db = await database;
     var raw = await db.insert(
@@ -67,6 +74,18 @@ class PersistenceService {
     final db = await database;
     var response = await db.update("LearningObject", learningObject.toMap(),
         where: "id = ?", whereArgs: [learningObject.id]);
+    return response;
+  }
+
+  Future<int> deleteCategory(Category category) async {
+    final db = await database;
+    return db.delete("Category", where: "id = ?", whereArgs: [category.id]);
+  }
+
+  updateCategory(Category category) async {
+    final db = await database;
+    var response = await db.update("Category", category.toMap(),
+        where: "id = ?", whereArgs: [category.id]);
     return response;
   }
 
@@ -93,5 +112,10 @@ class PersistenceService {
   deleteAllLearningObjects() async {
     final db = await database;
     db.delete("LearningObject");
+  }
+
+  deleteAllCategories() async {
+    final db = await database;
+    db.delete("Category");
   }
 }
