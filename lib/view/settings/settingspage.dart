@@ -7,33 +7,88 @@ import 'package:learn4kids/view/routing/router.dart' as router;
 import 'package:learn4kids/view/styles/colors.dart';
 import 'package:learn4kids/view/styles/text.dart' as TextStyle;
 
+class Card extends StatelessWidget {
+  Category category;
+  _SettingsState settingsState;
+
+  Card({this.category, this.settingsState});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              category.categoryName,
+              style: TextStyle.normalPrimary,
+            ),
+          ),
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Flexible(
+                    child: TextButton.icon(
+                        onPressed: () {
+                          settingsState.navigateTo(this.category);
+                        },
+                        style: TextButton.styleFrom(
+                          primary: AppColors.primary,
+                          backgroundColor: AppColors.secondary,
+                        ),
+                        label: Text(""),
+                        icon: Icon(Icons.edit))),
+                Flexible(
+                    child: TextButton.icon(
+                        onPressed: () {
+                          settingsState.delete(this.category);
+                        },
+                        style: TextButton.styleFrom(
+                          primary: AppColors.primary,
+                          backgroundColor: AppColors.secondary,
+                        ),
+                        label: Text(""),
+                        icon: Icon(Icons.delete)))
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class _SettingsState extends State<SettingsPage> {
   Future<List<Category>> _data;
 
   @override
   void initState() {
     super.initState();
-    _reload();
+    reload();
   }
 
-  void _reload() {
+  void reload() {
     _data = PersistenceService.db.getAlCategories();
   }
 
-  void _navigateTo(Category category) {
+  void navigateTo(Category category) {
     Navigator.pushNamed(context, router.SettingsCategoryRoute,
             arguments: category)
         .then((value) {
       setState(() {
-        _reload();
+        reload();
       });
     });
   }
 
-  void _delete(Category category) {
+  void delete(Category category) {
     PersistenceService.db.deleteCategory(category).then((value) {
       setState(() {
-        _reload();
+        reload();
       });
     });
   }
@@ -66,24 +121,14 @@ class _SettingsState extends State<SettingsPage> {
                         return Builder(
                           builder: (BuildContext context) {
                             return Container(
-                                width: 300,
-                                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: AppColors.secondary,
-                                    border: Border.all(width: 4)),
-                                child: GestureDetector(
-                                  child: Text(
-                                    '${i.categoryName}',
-                                    style: TextStyle.normalPrimary,
-                                  ),
-                                  onTap: () {
-                                    _navigateTo(i);
-                                  },
-                                  onLongPress: () {
-                                    _delete(i);
-                                  },
-                                ));
+                              width: 300,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: AppColors.secondary,
+                                  border: Border.all(width: 4)),
+                              child: Card(category: i, settingsState: this),
+                            );
                           },
                         );
                       }).toList(),
@@ -99,7 +144,7 @@ class _SettingsState extends State<SettingsPage> {
               child: Center(
             child: TextButton.icon(
                 onPressed: () {
-                  _navigateTo(new Category());
+                  navigateTo(new Category());
                 },
                 style: TextButton.styleFrom(
                   primary: AppColors.primary,

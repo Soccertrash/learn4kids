@@ -83,7 +83,7 @@ class _SettingsCategoryPageState extends State<SettingsCategoryPage> {
         setState(() {
           categoryError = "";
         });
-        if (category.id == -1) {
+        if (category.id == null) {
           PersistenceService.db.addCategoryToDatabase(category);
         } else {
           PersistenceService.db.updateCategory(category);

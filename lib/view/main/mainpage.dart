@@ -25,6 +25,7 @@ class MainPage extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.settings),
                   iconSize: 50,
+                  onPressed: () {},
                 ),
               ),
               alignment: Alignment.bottomRight,
