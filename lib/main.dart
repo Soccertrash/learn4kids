@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:learn4kids/routing/router.dart' as router;
-import 'package:learn4kids/routing/router.dart';
+import 'package:learn4kids/view/routing/router.dart' as router;
 
 void main() {
   runApp(Learn4KidsApp());
@@ -35,7 +34,7 @@ class Learn4KidsApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: router.generateRoute,
-      initialRoute: MainPageRoute,
+      initialRoute: router.MainPageRoute,
     );
   }
 }

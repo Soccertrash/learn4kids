@@ -1,3 +1,9 @@
 {
-  "title": "Learn4kids"
+  "title": "Learn4kids",
+  "settingsHeading": "Einstellungen",
+  "add": "Hinzufügen",
+  "addCategory": "Kategorie hinzufügen",
+  "category": "Kategorie",
+  "ok": "OK",
+  "cancel": "Abbrechen"
 }

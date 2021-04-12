@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn4kids/main/mainpage.dart';
-import 'package:learn4kids/settings/mainpage.dart';
+import 'package:learn4kids/view/main/mainpage.dart';
+import 'package:learn4kids/view/settings/settingspage.dart';
 
 const String MainPageRoute = "/";
 const String SettingsRoute = "/settings";

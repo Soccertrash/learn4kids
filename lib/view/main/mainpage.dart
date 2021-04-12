@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn4kids/routing/router.dart';
+import 'package:learn4kids/view/routing/router.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -12,22 +12,24 @@ class MainPage extends StatelessWidget {
     // than having to individually change instances of widgets.
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(flex: 5, child: Center(child: Text("Eins"))),
+          Expanded(flex: 1, child: Center(child: Text("Eins"))),
           Expanded(
-              flex: 5,
-              child: Align(
-                child: GestureDetector(
-                  onLongPress: () {
-                    Navigator.pushNamed(context, SettingsRoute);
-                  },
-                  child: IconButton(
-                    icon: const Icon(Icons.settings),
-                    iconSize: 50,
-                  ),
+            flex: 1,
+            child: Align(
+              child: GestureDetector(
+                onLongPress: () {
+                  Navigator.pushNamed(context, SettingsRoute);
+                },
+                child: IconButton(
+                  icon: const Icon(Icons.settings),
+                  iconSize: 50,
                 ),
-                alignment: Alignment.bottomRight,
-              )),
+              ),
+              alignment: Alignment.bottomRight,
+            ),
+          ),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

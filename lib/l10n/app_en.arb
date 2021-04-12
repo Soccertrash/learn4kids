@@ -1,3 +1,9 @@
 {
-  "title": "Learn4kids"
+  "title": "Learn4kids",
+  "settingsHeading": "Settings",
+  "add": "Add",
+  "addCategory": "Add new category",
+  "category": "Category",
+  "ok": "OK",
+  "cancel": "Cancel"
 }
