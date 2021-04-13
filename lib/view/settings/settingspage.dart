@@ -151,7 +151,8 @@ class _SettingsState extends State<SettingsPage> {
                   backgroundColor: AppColors.secondary,
                 ),
                 icon: Icon(Icons.add),
-                label: Text(AppLocalizations.of(context).add)),
+                label: Text(AppLocalizations.of(context).add,
+                    style: TextStyle.normalPrimary)),
           )),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.

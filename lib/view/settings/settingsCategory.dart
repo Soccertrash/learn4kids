@@ -88,6 +88,7 @@ class _SettingsCategoryPageState extends State<SettingsCategoryPage> {
         } else {
           PersistenceService.db.updateCategory(category);
         }
+        FocusScope.of(context).unfocus();
       }
     });
   }
