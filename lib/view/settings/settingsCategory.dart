@@ -5,6 +5,7 @@ import 'package:learn4kids/persist/access/persistenceService.dart';
 import 'package:learn4kids/persist/model/category.dart';
 import 'package:learn4kids/view/styles/colors.dart';
 import 'package:learn4kids/view/styles/text.dart' as TextStyle;
+import 'package:learn4kids/view/widgets/headingWithBackButton.dart';
 
 class _SettingsCategoryPageState extends State<SettingsCategoryPage> {
   String categoryError = "";
@@ -21,6 +22,7 @@ class _SettingsCategoryPageState extends State<SettingsCategoryPage> {
     return Scaffold(
       body: Column(
         children: [
+          HeadingWithBackButton(""),
           Expanded(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

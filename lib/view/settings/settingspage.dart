@@ -6,6 +6,7 @@ import 'package:learn4kids/persist/model/category.dart';
 import 'package:learn4kids/view/routing/router.dart' as router;
 import 'package:learn4kids/view/styles/colors.dart';
 import 'package:learn4kids/view/styles/text.dart' as TextStyle;
+import 'package:learn4kids/view/widgets/headingWithBackButton.dart';
 
 class Card extends StatelessWidget {
   Category category;
@@ -104,10 +105,7 @@ class _SettingsState extends State<SettingsPage> {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(
-              child: Center(
-                  child: Text(AppLocalizations.of(context).settingsHeading,
-                      style: TextStyle.heading))),
+          HeadingWithBackButton(AppLocalizations.of(context).settingsHeading),
           Expanded(
               flex: 2,
               child: FutureBuilder<List<Category>>(

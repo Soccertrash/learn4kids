@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn4kids/view/routing/router.dart';
+import 'package:learn4kids/view/styles/buttonSizes.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -24,7 +25,7 @@ class MainPage extends StatelessWidget {
                 },
                 child: IconButton(
                   icon: const Icon(Icons.settings),
-                  iconSize: 50,
+                  iconSize: ButtonSizes.iconSize,
                   onPressed: () {},
                 ),
               ),
